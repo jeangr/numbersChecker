@@ -1,16 +1,15 @@
-package it.gianni.NumbersChecker;
+package it.gianni.numberschecker;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
-import it.gianni.NumbersChecker.storage.StorageProperties;
-import it.gianni.NumbersChecker.storage.StorageService;
+import it.gianni.numberschecker.properties.StorageProperties;
+import it.gianni.numberschecker.service.StorageService;
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
+@SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)
 public class NumbersCheckerApplication {
 

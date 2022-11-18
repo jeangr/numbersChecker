@@ -1,7 +1,9 @@
-package it.gianni.NumbersChecker;
+package it.gianni.numberschecker.controller;
 
-import it.gianni.NumbersChecker.storage.StorageFileNotFoundException;
-import it.gianni.NumbersChecker.storage.StorageService;
+import it.gianni.numberschecker.exception.StorageFileNotFoundException;
+import it.gianni.numberschecker.model.SouthAfricanMobileNumberEntity;
+import it.gianni.numberschecker.service.CSVService;
+import it.gianni.numberschecker.service.StorageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -20,16 +22,18 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
 public class FileUploadController {
 
 	private final StorageService storageService;
+	private final CSVService csvService;
 
-	@Autowired
-	public FileUploadController(StorageService storageService) {
+	public FileUploadController(StorageService storageService, CSVService csvService) {
 		this.storageService = storageService;
+		this.csvService = csvService;
 	}
 
 	@GetMapping("/")
@@ -57,6 +61,8 @@ public class FileUploadController {
 			RedirectAttributes redirectAttributes) {
 
 		storageService.store(file);
+		csvService.saveInDb(file);
+		final List<SouthAfricanMobileNumberEntity> allNumbers = csvService.getAllNumbers();
 		redirectAttributes.addFlashAttribute("message",
 				"You successfully uploaded " + file.getOriginalFilename() + "!");
 

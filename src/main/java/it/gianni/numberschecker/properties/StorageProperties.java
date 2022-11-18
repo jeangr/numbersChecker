@@ -1,4 +1,4 @@
-package it.gianni.NumbersChecker.storage;
+package it.gianni.numberschecker.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

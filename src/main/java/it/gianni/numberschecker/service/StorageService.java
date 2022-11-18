@@ -1,4 +1,4 @@
-package it.gianni.NumbersChecker.storage;
+package it.gianni.numberschecker.service;
 
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;

@@ -1,4 +1,4 @@
-package it.gianni.NumbersChecker.storage;
+package it.gianni.numberschecker.exception;
 
 public class StorageException extends RuntimeException {
 

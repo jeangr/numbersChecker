@@ -1,6 +1,9 @@
-package it.gianni.NumbersChecker.storage;
+package it.gianni.numberschecker.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import it.gianni.numberschecker.exception.StorageException;
+import it.gianni.numberschecker.exception.StorageFileNotFoundException;
+import it.gianni.numberschecker.properties.StorageProperties;
+import it.gianni.numberschecker.utils.CSVUtil;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -21,7 +24,6 @@ public class FileSystemStorageService implements StorageService {
 
 	private final Path rootLocation;
 
-	@Autowired
 	public FileSystemStorageService(StorageProperties properties) {
 		this.rootLocation = Paths.get(properties.getLocation());
 	}
@@ -31,6 +33,9 @@ public class FileSystemStorageService implements StorageService {
 		try {
 			if (file.isEmpty()) {
 				throw new StorageException("Failed to store empty file.");
+			}
+			if (!CSVUtil.hasCSVFormat(file)) {
+				throw new StorageException("The file is not a CSV.");
 			}
 			Path destinationFile = this.rootLocation.resolve(
 					Paths.get(file.getOriginalFilename()))
