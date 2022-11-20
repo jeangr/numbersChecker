@@ -3,9 +3,9 @@ package it.gianni.numberschecker.controller;
 import it.gianni.numberschecker.exception.StorageFileNotFoundException;
 import it.gianni.numberschecker.model.SouthAfricanMobileNumberEntity;
 import it.gianni.numberschecker.service.CSVService;
-import it.gianni.numberschecker.service.StorageService;
+import it.gianni.numberschecker.service.ICSVService;
+import it.gianni.numberschecker.service.IStorageService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -28,10 +28,10 @@ import java.util.stream.Collectors;
 @Controller
 public class FileUploadController {
 
-	private final StorageService storageService;
-	private final CSVService csvService;
+	private final IStorageService storageService;
+	private final ICSVService csvService;
 
-	public FileUploadController(StorageService storageService, CSVService csvService) {
+	public FileUploadController(IStorageService storageService, ICSVService csvService) {
 		this.storageService = storageService;
 		this.csvService = csvService;
 	}
@@ -39,10 +39,12 @@ public class FileUploadController {
 	@GetMapping("/")
 	public String listUploadedFiles(Model model) throws IOException {
 
-		model.addAttribute("files", storageService.loadAll().map(
-				path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
-						"serveFile", path.getFileName().toString()).build().toUri().toString())
-				.collect(Collectors.toList()));
+//		model.addAttribute("files", storageService.loadAll().map(
+//				path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
+//						"serveFile", path.getFileName().toString()).build().toUri().toString())
+//				.collect(Collectors.toList()));
+
+		model.addAttribute("files", csvService.getData());
 
 		return "uploadForm";
 	}
@@ -60,13 +62,14 @@ public class FileUploadController {
 	public String handleFileUpload(@RequestParam("file") MultipartFile file,
 			RedirectAttributes redirectAttributes) {
 
-		storageService.store(file);
+//		storageService.store(file);
 		csvService.saveInDb(file);
-		final List<SouthAfricanMobileNumberEntity> allNumbers = csvService.getAllNumbers();
-		redirectAttributes.addFlashAttribute("message",
-				"You successfully uploaded " + file.getOriginalFilename() + "!");
+		final List<SouthAfricanMobileNumberEntity> allNumbers = csvService.getData();
+//		redirectAttributes.addFlashAttribute("message",
+//				"You successfully uploaded " + file.getOriginalFilename() + "!");
 
 		return "redirect:/";
+//		return allNumbers;
 	}
 
 	@ExceptionHandler(StorageFileNotFoundException.class)

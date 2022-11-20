@@ -20,7 +20,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.stream.Stream;
 
 @Service
-public class FileSystemStorageService implements StorageService {
+public class FileSystemStorageService implements IStorageService {
 
 	private final Path rootLocation;
 

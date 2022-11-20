@@ -10,18 +10,19 @@ import javax.persistence.Table;
 public class SouthAfricanMobileNumberEntity {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
-    @Column(name = "sms_phone")
-    private String sms_phone;
+    @Column(name = "original_number", nullable = false)
+    private String originalNumber;
+
+    @Column(name = "is_valid", nullable = false)
+    private boolean isValid;
+
+    @Column(name = "corrected_number")
+    private String correctedNumber;
 
     public SouthAfricanMobileNumberEntity() {}
-
-    public SouthAfricanMobileNumberEntity(long id, String sms_phone) {
-        this.id = id;
-        this.sms_phone = sms_phone;
-    }
 
     public long getId() {
         return id;
@@ -31,19 +32,27 @@ public class SouthAfricanMobileNumberEntity {
         this.id = id;
     }
 
-    public String getSms_phone() {
-        return sms_phone;
+    public String getOriginalNumber() {
+        return originalNumber;
     }
 
-    public void setSms_phone(String sms_phone) {
-        this.sms_phone = sms_phone;
+    public void setOriginalNumber(String originalNumber) {
+        this.originalNumber = originalNumber;
     }
 
-    @Override
-    public String toString() {
-        return "SouthAfricanMobileNumber{" +
-                "id=" + id +
-                ", sms_phone='" + sms_phone + '\'' +
-                '}';
+    public boolean isValid() {
+        return isValid;
+    }
+
+    public void setValid(boolean valid) {
+        isValid = valid;
+    }
+
+    public String getCorrectedNumber() {
+        return correctedNumber;
+    }
+
+    public void setCorrectedNumber(String correctedNumber) {
+        this.correctedNumber = correctedNumber;
     }
 }

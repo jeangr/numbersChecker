@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 
 import it.gianni.numberschecker.properties.StorageProperties;
-import it.gianni.numberschecker.service.StorageService;
+import it.gianni.numberschecker.service.IStorageService;
 
 @SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)
@@ -18,7 +18,7 @@ public class NumbersCheckerApplication {
 	}
 
 	@Bean
-	CommandLineRunner init(StorageService storageService) {
+	CommandLineRunner init(IStorageService storageService) {
 		return (args) -> {
 			storageService.deleteAll();
 			storageService.init();
