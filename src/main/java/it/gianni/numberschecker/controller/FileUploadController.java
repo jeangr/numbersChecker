@@ -49,27 +49,29 @@ public class FileUploadController {
 		return "uploadForm";
 	}
 
-	@GetMapping("/files/{filename:.+}")
+	@GetMapping("/numbers")
 	@ResponseBody
-	public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+	public ResponseEntity<List<SouthAfricanMobileNumberEntity>> serveFile(@PathVariable String filename) {
 
-		Resource file = storageService.loadAsResource(filename);
-		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-				"attachment; filename=\"" + file.getFilename() + "\"").body(file);
+//		Resource file = storageService.loadAsResource(filename);
+//		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+//				"attachment; filename=\"" + file.getFilename() + "\"").body(file);
+
+		return ResponseEntity.ok().body(csvService.getData());
 	}
 
-	@PostMapping("/")
+	@PostMapping("/files")
 	public String handleFileUpload(@RequestParam("file") MultipartFile file,
 			RedirectAttributes redirectAttributes) {
 
 //		storageService.store(file);
 		csvService.saveInDb(file);
 		final List<SouthAfricanMobileNumberEntity> allNumbers = csvService.getData();
-//		redirectAttributes.addFlashAttribute("message",
-//				"You successfully uploaded " + file.getOriginalFilename() + "!");
+
+		redirectAttributes.addFlashAttribute("message",
+				"You successfully uploaded " + file.getOriginalFilename() + "!");
 
 		return "redirect:/";
-//		return allNumbers;
 	}
 
 	@ExceptionHandler(StorageFileNotFoundException.class)
