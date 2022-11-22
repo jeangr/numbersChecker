@@ -4,6 +4,7 @@ import it.gianni.numberschecker.exception.StorageException;
 import it.gianni.numberschecker.exception.StorageFileNotFoundException;
 import it.gianni.numberschecker.properties.StorageProperties;
 import it.gianni.numberschecker.utils.CSVUtil;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -95,6 +96,11 @@ public class FileSystemStorageService implements IStorageService {
 	@Override
 	public void deleteAll() {
 		FileSystemUtils.deleteRecursively(rootLocation.toFile());
+	}
+
+	@Override
+	public void deleteFiles() throws IOException {
+		FileUtils.cleanDirectory(rootLocation.toFile());
 	}
 
 	@Override

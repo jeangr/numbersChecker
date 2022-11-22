@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Numbers checker</title>
+	<link th:href="@{/styles/css/main.css}" rel="stylesheet" />
+</head>
+
+<body>
+<!--	<div th:if="${message}">-->
+<!--		<h2 th:text="${message}"></h2>-->
+<!--	</div>-->
+
+	<div id="upload">
+		<form method="POST" enctype="multipart/form-data" action="/upload">
+			<table>
+				<tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+				<tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+				<tr th:if="${message}"> <td colspan="2"><h4 th:text="${message}"></h4></td> </tr>
+			</table>
+		</form>
+		<br>
+		<br>
+		<form method="POST" enctype="multipart/form-data" action="/checkNumber">
+			<table>
+				<tr><td>Number to check:</td><td><input type="text" name="numberToCheck" /></td></tr>
+				<tr><td></td><td><input type="submit" value="Check" /></td></tr>
+			</table>
+		</form>
+	</div>
+
+	<div th:if="${numbers}" id="table-scroll">
+		<table id="numbers">
+
+			<thead>
+				<tr>
+					<td><b>ID</b></td>
+					<td><b>ORIGINAL NUMBER</b> </td>
+					<td><b>IS VALID</b> </td>
+					<td><b>CORRECTED NUMBER</b> </td>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr th:each="number, iStat : ${numbers}" th:style="${number.isValid} == FALSE ? 'background: #fa6d4d' : 'background: #a2fcdb'">
+
+					<td th:text="${number.id}"></td>
+					<td th:text="${number.originalNumber}"></td>
+					<td th:text="${number.isValid}"></td>
+					<td th:text="${number.correctedNumber}" th:style="${number.correctedNumber} ? 'background: #fae04d' : _"></td>
+
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

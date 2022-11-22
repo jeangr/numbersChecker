@@ -1,23 +1,19 @@
 package it.gianni.numberschecker.utils;
 
-import it.gianni.numberschecker.model.SouthAfricanMobileNumberEntity;
-import org.apache.commons.csv.*;
+import org.springframework.lang.NonNull;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
+
 
 public class CSVUtil {
-  public static String TYPE = "text/csv";
 
-  public static boolean hasCSVFormat(MultipartFile file) {
+  public CSVUtil(){}
 
-    if (!TYPE.equals(file.getContentType())) {
-      return false;
-    }
+  private static final String TYPE = "text/csv";
 
-    return true;
+  public static boolean hasCSVFormat(@NonNull MultipartFile file) {
+    return file.getContentType().equals(TYPE);
   }
 
 }
