@@ -33,10 +33,10 @@ public class FileSystemStorageService implements IStorageService {
 	public void store(MultipartFile file) {
 		try {
 			if (file.isEmpty()) {
-				throw new StorageException("Failed to store empty file.");
+				throw new StorageException("the file is empty.");
 			}
 			if (!CSVUtil.hasCSVFormat(file)) {
-				throw new StorageException("The file is not a CSV.");
+				throw new StorageException("the file is not a CSV.");
 			}
 			Path destinationFile = this.rootLocation.resolve(
 					Paths.get(file.getOriginalFilename()))

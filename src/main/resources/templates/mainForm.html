@@ -8,16 +8,13 @@
 </head>
 
 <body>
-<!--	<div th:if="${message}">-->
-<!--		<h2 th:text="${message}"></h2>-->
-<!--	</div>-->
 
 	<div id="upload">
 		<form method="POST" enctype="multipart/form-data" action="/upload">
 			<table>
 				<tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
 				<tr><td></td><td><input type="submit" value="Upload" /></td></tr>
-				<tr th:if="${message}"> <td colspan="2"><h4 th:text="${message}"></h4></td> </tr>
+				<tr th:if="${messageUpload}"> <td colspan="2"><h4 th:text="${messageUpload}"></h4></td> </tr>
 			</table>
 		</form>
 		<br>
@@ -26,6 +23,7 @@
 			<table>
 				<tr><td>Number to check:</td><td><input type="text" name="numberToCheck" /></td></tr>
 				<tr><td></td><td><input type="submit" value="Check" /></td></tr>
+				<tr th:if="${messageCheckNumber}"> <td colspan="2"><h4 th:text="${messageCheckNumber}"></h4></td> </tr>
 			</table>
 		</form>
 	</div>
@@ -53,6 +51,13 @@
 				</tr>
 			</tbody>
 		</table>
+
+<!--		<div th:if="${bookPage.totalPages > 0}" class="pagination"
+			 th:each="pageNumber : ${pageNumbers}">
+			<a th:href="@{/listBooks(size=${bookPage.size}, page=${pageNumber})}"
+			   th:text=${pageNumber}
+			   th:class="${pageNumber==bookPage.number + 1} ? active"></a>
+		</div>-->
 	</div>
 </body>
 </html>
