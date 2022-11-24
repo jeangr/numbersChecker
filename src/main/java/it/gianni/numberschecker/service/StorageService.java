@@ -1,11 +1,12 @@
 package it.gianni.numberschecker.service;
 
+import org.springframework.lang.NonNull;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Path;
 
-public interface IStorageService {
+public interface StorageService {
 
     /**
      * Init the storage.
@@ -19,7 +20,7 @@ public interface IStorageService {
      * @param file {@link MultipartFile}
      * @return {@link Path}
      */
-    Path store(MultipartFile file);
+    Path store(@NonNull MultipartFile file);
 
     /**
      * Delete the store directory.

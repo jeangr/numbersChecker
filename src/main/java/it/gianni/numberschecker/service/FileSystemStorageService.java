@@ -4,6 +4,7 @@ import it.gianni.numberschecker.exception.StorageException;
 import it.gianni.numberschecker.properties.StorageProperties;
 import it.gianni.numberschecker.utils.CSVUtil;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,7 +18,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
 @Service
-public class FileSystemStorageService implements IStorageService {
+public class FileSystemStorageService implements StorageService {
 
     private final Path rootLocation;
 
@@ -26,7 +27,7 @@ public class FileSystemStorageService implements IStorageService {
     }
 
     @Override
-    public Path store(MultipartFile file) {
+    public Path store(@NonNull MultipartFile file) {
         try {
             if (file.isEmpty()) {
                 throw new StorageException("the file is empty.");

@@ -1,6 +1,4 @@
-package it.gianni.numberschecker.OM;
-
-import javax.persistence.Column;
+package it.gianni.numberschecker.om;
 
 public class SouthAfricanMobileNumberOM {
 

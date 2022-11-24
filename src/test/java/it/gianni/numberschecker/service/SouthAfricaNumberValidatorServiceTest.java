@@ -1,17 +1,17 @@
 package it.gianni.numberschecker.service;
 
-import it.gianni.numberschecker.OM.SouthAfricanMobileNumberOM;
+import it.gianni.numberschecker.om.SouthAfricanMobileNumberOM;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ValidateNumberServiceTest {
+class SouthAfricaNumberValidatorServiceTest {
 
-    private ValidateNumberService service;
+    private SouthAfricaNumberValidatorService service;
 
     @BeforeEach
     void setup() {
-        service = new ValidateNumberService();
+        service = new SouthAfricaNumberValidatorService();
     }
 
     @Test

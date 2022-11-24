@@ -1,10 +1,10 @@
 package it.gianni.numberschecker.service;
 
 
-import it.gianni.numberschecker.OM.SouthAfricanMobileNumberOM;
+import it.gianni.numberschecker.om.SouthAfricanMobileNumberOM;
 import org.springframework.lang.NonNull;
 
-public interface IValidateNumberService {
+public interface ValidatorNumberService {
 
     /**
      * Validate a number.

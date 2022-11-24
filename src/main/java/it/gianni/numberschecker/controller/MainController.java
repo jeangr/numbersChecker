@@ -1,12 +1,12 @@
 package it.gianni.numberschecker.controller;
 
-import it.gianni.numberschecker.OM.SouthAfricanMobileNumberOM;
+import it.gianni.numberschecker.om.SouthAfricanMobileNumberOM;
 import it.gianni.numberschecker.exception.CSVException;
 import it.gianni.numberschecker.exception.StorageException;
-import it.gianni.numberschecker.service.ICSVService;
-import it.gianni.numberschecker.service.IStorageService;
+import it.gianni.numberschecker.service.CSVService;
+import it.gianni.numberschecker.service.StorageService;
 
-import it.gianni.numberschecker.service.IValidateNumberService;
+import it.gianni.numberschecker.service.ValidatorNumberService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -33,20 +33,21 @@ import java.util.stream.IntStream;
 @Controller
 public class MainController {
 
-    private final IStorageService storageService;
-    private final ICSVService csvService;
+    private final StorageService storageService;
+    private final CSVService csvService;
     private static final String MAIN_FORM_NAME = "mainForm";
     private static final String DATA_PAGE = "dataPage";
-    private final IValidateNumberService validateNumberService;
+    private final ValidatorNumberService validateNumberService;
 
-    public MainController(IStorageService storageService, ICSVService csvService, IValidateNumberService validateNumberService) {
+    public MainController(StorageService storageService, CSVService csvService, ValidatorNumberService validateNumberService) {
         this.storageService = storageService;
         this.csvService = csvService;
         this.validateNumberService = validateNumberService;
     }
 
     @GetMapping("/")
-    public String showResults(Model model) {
+    @NonNull
+    public String showResults(@NonNull Model model) {
         model.addAttribute(DATA_PAGE, null);
 
         setEmptyModel(model);
@@ -56,7 +57,8 @@ public class MainController {
 
 
     @PostMapping("/upload")
-    public String handleFileUpload(Model model, @RequestParam("file") MultipartFile file) throws IOException {
+    @NonNull
+    public String handleFileUpload(@NonNull Model model, @NonNull @RequestParam("file") MultipartFile file) throws IOException {
         String messageUpload = "messageUpload";
 
         storageService.deleteFiles();
@@ -104,9 +106,10 @@ public class MainController {
     }
 
     @GetMapping("/numbersPaginated")
-    public String getData(Model model,
-                          @RequestParam("page") Optional<Integer> page,
-                          @RequestParam("size") Optional<Integer> size) {
+    @NonNull
+    public String getData(@NonNull Model model,
+                          @NonNull @RequestParam("page") Optional<Integer> page,
+                          @NonNull @RequestParam("size") Optional<Integer> size) {
 
 
         final int currentPage = page.orElse(1);
@@ -122,7 +125,8 @@ public class MainController {
     }
 
     @PostMapping("/checkNumber")
-    public String checkNumber(Model model, @RequestParam("numberToCheck") String numberToCheck) {
+    @NonNull
+    public String checkNumber(@NonNull Model model, @NonNull @RequestParam("numberToCheck") String numberToCheck) {
         SouthAfricanMobileNumberOM validatedNumber;
 
         if (StringUtils.isBlank(numberToCheck)) {
@@ -142,7 +146,7 @@ public class MainController {
         return MAIN_FORM_NAME;
     }
 
-    private static void manageModelPagination(Model model, Page<SouthAfricanMobileNumberOM> dataPage) {
+    private static void manageModelPagination(@NonNull Model model, @NonNull Page<SouthAfricanMobileNumberOM> dataPage) {
         int totalPages = dataPage.getTotalPages();
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)

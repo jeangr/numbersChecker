@@ -1,6 +1,6 @@
 package it.gianni.numberschecker.service;
 
-import it.gianni.numberschecker.OM.SouthAfricanMobileNumberOM;
+import it.gianni.numberschecker.om.SouthAfricanMobileNumberOM;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
-public class ValidateNumberService implements IValidateNumberService {
+public class SouthAfricaNumberValidatorService implements ValidatorNumberService {
 
     private static final String PREFIX_SOUTH_AFRICA = "27";
     private static final String CORRECT_PATTERN = "^27([0-9]{9})$";

@@ -1,13 +1,13 @@
 package it.gianni.numberschecker.mapper;
 
-import it.gianni.numberschecker.OM.SouthAfricanMobileNumberOM;
+import it.gianni.numberschecker.om.SouthAfricanMobileNumberOM;
 import it.gianni.numberschecker.entity.SouthAfricanMobileNumberEntity;
 import org.mapstruct.Mapper;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface IEntityOmMapper {
+public interface EntityOmMapper {
 
     SouthAfricanMobileNumberEntity omToEntity(SouthAfricanMobileNumberOM om);
 
