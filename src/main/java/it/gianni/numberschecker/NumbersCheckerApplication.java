@@ -13,16 +13,16 @@ import it.gianni.numberschecker.service.IStorageService;
 @EnableConfigurationProperties(StorageProperties.class)
 public class NumbersCheckerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(NumbersCheckerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(NumbersCheckerApplication.class, args);
+    }
 
-	@Bean
-	CommandLineRunner init(IStorageService storageService) {
-		return (args) -> {
-			storageService.deleteAll();
-			storageService.init();
-		};
-	}
+    @Bean
+    CommandLineRunner init(IStorageService storageService) {
+        return (args) -> {
+            storageService.deleteDirectory();
+            storageService.init();
+        };
+    }
 
 }

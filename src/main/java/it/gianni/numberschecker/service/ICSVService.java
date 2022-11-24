@@ -1,14 +1,18 @@
 package it.gianni.numberschecker.service;
 
-import it.gianni.numberschecker.model.SouthAfricanMobileNumberEntity;
-import org.springframework.web.multipart.MultipartFile;
+import it.gianni.numberschecker.OM.SouthAfricanMobileNumberOM;
+import it.gianni.numberschecker.entity.SouthAfricanMobileNumberEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
+import java.io.InputStream;
 
 public interface ICSVService {
 
-    void saveInDb(MultipartFile file);
+    void saveData(InputStream is);
 
-    List<SouthAfricanMobileNumberEntity> getData();
+    Page<SouthAfricanMobileNumberOM> getDataPage(Pageable pageable);
+
+    void deleteData();
 
 }

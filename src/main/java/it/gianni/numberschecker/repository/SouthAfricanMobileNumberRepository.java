@@ -1,6 +1,6 @@
 package it.gianni.numberschecker.repository;
 
-import it.gianni.numberschecker.model.SouthAfricanMobileNumberEntity;
+import it.gianni.numberschecker.entity.SouthAfricanMobileNumberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

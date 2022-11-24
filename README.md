@@ -1,9 +1,13 @@
-# Spring Boot Upload/Download CSV Files with MySQL database example
+# Numbers Checker
 
-For more detail, please visit:
-> [Spring Boot: Upload CSV file to MySQL Database | Multipart File](https://bezkoder.com/spring-boot-upload-csv-file/)
+## Requirements
+* Java 8 + JDK installed
 
-## Run Spring Boot application
-```
-mvn spring-boot:run
-```
+### Instructions
+
+To run the application please execute the 'mvnw' script by command line:
+
+* Linux: ./mvnw clean spring-boot:run
+* Win:  .\mwnw.cmd clean spring-boot:run
+
+The application is running on port 8099: http://localhost:8099
