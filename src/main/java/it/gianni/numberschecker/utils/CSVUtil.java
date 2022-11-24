@@ -11,6 +11,12 @@ public class CSVUtil {
 
     private static final String TYPE = "text/csv";
 
+    /**
+     * Returns is the file is a CSV.
+     *
+     * @param file {@link MultipartFile}
+     * @return a boolean
+     */
     public static boolean hasCSVFormat(@NonNull MultipartFile file) {
         Assert.notNull(file, "file is null");
 

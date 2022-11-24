@@ -35,11 +35,8 @@ public class MainController {
 
     private final IStorageService storageService;
     private final ICSVService csvService;
-
     private static final String MAIN_FORM_NAME = "mainForm";
-
     private static final String DATA_PAGE = "dataPage";
-
     private final IValidateNumberService validateNumberService;
 
     public MainController(IStorageService storageService, ICSVService csvService, IValidateNumberService validateNumberService) {
@@ -101,13 +98,8 @@ public class MainController {
 
         model.addAttribute(DATA_PAGE, dataPage);
 
-        int totalPages = dataPage.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-                    .boxed()
-                    .collect(Collectors.toList());
-            model.addAttribute("pageNumbers", pageNumbers);
-        }
+        manageModelPagination(model, dataPage);
+
         return MAIN_FORM_NAME;
     }
 
@@ -124,13 +116,7 @@ public class MainController {
 
         model.addAttribute(DATA_PAGE, dataPage);
 
-        int totalPages = dataPage.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-                    .boxed()
-                    .collect(Collectors.toList());
-            model.addAttribute("pageNumbers", pageNumbers);
-        }
+        manageModelPagination(model, dataPage);
 
         return MAIN_FORM_NAME;
     }
@@ -154,6 +140,16 @@ public class MainController {
             model.addAttribute(DATA_PAGE, dataPage);
         }
         return MAIN_FORM_NAME;
+    }
+
+    private static void manageModelPagination(Model model, Page<SouthAfricanMobileNumberOM> dataPage) {
+        int totalPages = dataPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
     }
 
     private static void setEmptyModel(@NonNull Model model) {
