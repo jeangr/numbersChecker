@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.lang.NonNull;
 
 import java.io.InputStream;
+import java.util.List;
 
 public interface CSVService {
 
@@ -13,8 +14,9 @@ public interface CSVService {
      * Save csv data into database.
      *
      * @param is {@link InputStream}
+     * @return
      */
-    void saveData(@NonNull InputStream is);
+    List<SouthAfricanMobileNumberOM> csvToNumbers(@NonNull InputStream is);
 
     /**
      * Returns the list of numbers paginated.

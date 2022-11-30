@@ -3,10 +3,8 @@ package it.gianni.numberschecker.controller;
 import it.gianni.numberschecker.om.SouthAfricanMobileNumberOM;
 import it.gianni.numberschecker.exception.CSVException;
 import it.gianni.numberschecker.exception.StorageException;
-import it.gianni.numberschecker.service.CSVService;
-import it.gianni.numberschecker.service.StorageService;
+import it.gianni.numberschecker.service.*;
 
-import it.gianni.numberschecker.service.ValidatorNumberService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -38,11 +36,16 @@ public class MainController {
     private static final String MAIN_FORM_NAME = "mainForm";
     private static final String DATA_PAGE = "dataPage";
     private final ValidatorNumberService validateNumberService;
+    private final DatabaseService databaseService;
 
-    public MainController(StorageService storageService, CSVService csvService, ValidatorNumberService validateNumberService) {
+    private final PaginationService paginationService;
+
+    public MainController(StorageService storageService, CSVService csvService, ValidatorNumberService validateNumberService, DatabaseService databaseService, PaginationService paginationService) {
         this.storageService = storageService;
         this.csvService = csvService;
         this.validateNumberService = validateNumberService;
+        this.databaseService = databaseService;
+        this.paginationService = paginationService;
     }
 
     @GetMapping("/")
@@ -62,7 +65,7 @@ public class MainController {
         String messageUpload = "messageUpload";
 
         storageService.deleteFiles();
-        csvService.deleteData();
+        databaseService.deleteAll();;
 
         final Path store;
 
@@ -83,20 +86,26 @@ public class MainController {
             return MAIN_FORM_NAME;
         }
 
+        final List<SouthAfricanMobileNumberOM> southAfricanMobileNumberOMS;
+
         try {
-            csvService.saveData(is);
+            southAfricanMobileNumberOMS = csvService.csvToNumbers(is);
         } catch (CSVException e) {
             setEmptyModel(model);
             model.addAttribute(messageUpload, e.getMessage());
             return MAIN_FORM_NAME;
         }
 
+        databaseService.saveAll(southAfricanMobileNumberOMS);
+
         model.addAttribute(messageUpload, file.getOriginalFilename() + " uploaded!");
 
         final int currentPage = 1;
         final int pageSize = 25;
 
-        final Page<SouthAfricanMobileNumberOM> dataPage = csvService.getDataPage(PageRequest.of(currentPage - 1, pageSize));
+        final List<SouthAfricanMobileNumberOM> all = databaseService.getAll();
+
+        final Page<SouthAfricanMobileNumberOM> dataPage = paginationService.managePagination(all, PageRequest.of(currentPage - 1, pageSize));
 
         model.addAttribute(DATA_PAGE, dataPage);
 
@@ -115,7 +124,9 @@ public class MainController {
         final int currentPage = page.orElse(1);
         final int pageSize = size.orElse(25);
 
-        final Page<SouthAfricanMobileNumberOM> dataPage = csvService.getDataPage(PageRequest.of(currentPage - 1, pageSize));
+        final List<SouthAfricanMobileNumberOM> all = databaseService.getAll();
+
+        final Page<SouthAfricanMobileNumberOM> dataPage = paginationService.managePagination(all, PageRequest.of(currentPage - 1, pageSize));
 
         model.addAttribute(DATA_PAGE, dataPage);
 

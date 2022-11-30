@@ -37,9 +37,9 @@ public class CSVSouthAfricaService implements CSVService {
     }
 
     @Override
-    public void saveData(@NonNull InputStream is) {
-        final List<SouthAfricanMobileNumberOM> oms = this.csvToNumbers(is);
-        repository.saveAll(mapper.omsToEntities(oms));
+    public List<SouthAfricanMobileNumberOM> csvToNumbers(@NonNull InputStream is) {
+        return this.convert(is);
+        //repository.saveAll(mapper.omsToEntities(oms));
     }
 
     @Override
@@ -70,7 +70,7 @@ public class CSVSouthAfricaService implements CSVService {
     }
 
     @NonNull
-    private List<SouthAfricanMobileNumberOM> csvToNumbers(@NonNull InputStream is) {
+    private List<SouthAfricanMobileNumberOM> convert(@NonNull InputStream is) {
         try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
              CSVParser csvParser = new CSVParser(fileReader,
                      CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim());) {
