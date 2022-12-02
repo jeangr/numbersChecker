@@ -27,3 +27,8 @@
 .pagination {
     display: inline-block;
 }
+
+#solid {
+    border-style: solid;
+    width: 40%;
+}
